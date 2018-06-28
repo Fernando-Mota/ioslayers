@@ -10,15 +10,45 @@ import UIKit
 
 class ViewController: UIViewController {
 
+    @IBOutlet weak var holder: UILabel!
+    
+    @IBOutlet weak var viewHolder: UIView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
+        let path =  UIBezierPath(roundedRect: CGRect(x: holder.bounds.origin.x, y: holder.bounds.origin.y, width: holder.bounds.width, height: holder.bounds.height-10), byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 10.0, height: 10.0))
+        
+        path.move(to: CGPoint(x: holder.frame.width-50, y: holder.frame.height-10))
+        
+        path.addLine(to: CGPoint(x: holder.frame.width-50+6, y: holder.frame.height))
+        
+        path.addLine(to: CGPoint(x: holder.frame.width-50+12, y: holder.frame.height-10))
+        UIColor.red.setFill()
+        path.fill()
+        let maskLayer = CAShapeLayer()
+        maskLayer.fillColor = UIColor.red.cgColor
+        maskLayer.path = path.cgPath
+        
+       holder.layer.mask = maskLayer
+        
+       
+    }
+    
+    
+    @objc func action() {
+        print("Coisou!")
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    @IBAction func diminuir(_ sender: UIButton) {
+        holder.layer.sublayers![0].frame.size.width = holder.layer.sublayers![0].frame.size.width - 10
     }
+    
+        
+    
 
 
 }
